@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72594F691E57076B00ED0812 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72594F681E57076B00ED0812 /* SearchViewController.swift */; };
+		72594F6B1E5708FD00ED0812 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72594F6A1E5708FD00ED0812 /* TableViewController.swift */; };
 		72FFF0F21E55CB6E004C10B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FFF0F11E55CB6E004C10B3 /* AppDelegate.swift */; };
-		72FFF0F41E55CB6E004C10B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FFF0F31E55CB6E004C10B3 /* ViewController.swift */; };
 		72FFF0F71E55CB6E004C10B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72FFF0F51E55CB6E004C10B3 /* Main.storyboard */; };
 		72FFF0F91E55CB6E004C10B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72FFF0F81E55CB6E004C10B3 /* Assets.xcassets */; };
 		72FFF0FC1E55CB6E004C10B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72FFF0FA1E55CB6E004C10B3 /* LaunchScreen.storyboard */; };
@@ -34,9 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		72594F681E57076B00ED0812 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		72594F6A1E5708FD00ED0812 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		72FFF0EE1E55CB6E004C10B3 /* SwiftLabb1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLabb1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72FFF0F11E55CB6E004C10B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		72FFF0F31E55CB6E004C10B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		72FFF0F61E55CB6E004C10B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		72FFF0F81E55CB6E004C10B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72FFF0FB1E55CB6E004C10B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,11 +100,12 @@
 			isa = PBXGroup;
 			children = (
 				72FFF0F11E55CB6E004C10B3 /* AppDelegate.swift */,
-				72FFF0F31E55CB6E004C10B3 /* ViewController.swift */,
 				72FFF0F51E55CB6E004C10B3 /* Main.storyboard */,
 				72FFF0F81E55CB6E004C10B3 /* Assets.xcassets */,
 				72FFF0FA1E55CB6E004C10B3 /* LaunchScreen.storyboard */,
 				72FFF0FD1E55CB6E004C10B3 /* Info.plist */,
+				72594F681E57076B00ED0812 /* SearchViewController.swift */,
+				72594F6A1E5708FD00ED0812 /* TableViewController.swift */,
 			);
 			path = SwiftLabb1;
 			sourceTree = "<group>";
@@ -259,7 +262,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72FFF0F41E55CB6E004C10B3 /* ViewController.swift in Sources */,
+				72594F691E57076B00ED0812 /* SearchViewController.swift in Sources */,
+				72594F6B1E5708FD00ED0812 /* TableViewController.swift in Sources */,
 				72FFF0F21E55CB6E004C10B3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,6 +507,7 @@
 				72FFF1181E55CB6E004C10B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		72FFF1191E55CB6E004C10B3 /* Build configuration list for PBXNativeTarget "SwiftLabb1Tests" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +516,7 @@
 				72FFF11B1E55CB6E004C10B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		72FFF11C1E55CB6E004C10B3 /* Build configuration list for PBXNativeTarget "SwiftLabb1UITests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +525,7 @@
 				72FFF11E1E55CB6E004C10B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

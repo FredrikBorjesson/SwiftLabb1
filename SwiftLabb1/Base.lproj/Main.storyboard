@@ -6,13 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SwiftLabb1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SearchViewController" customModule="SwiftLabb1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -20,16 +21,62 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MatAppen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7K-57-5M0">
+                                <rect key="frame" x="62" y="74" width="290" height="57"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="bFs-tA-ENm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sök här" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l7c-A2-4tc">
+                                <rect key="frame" x="42.5" y="318.5" width="290" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Rog-lV-dmo"/>
+                                    <constraint firstAttribute="width" constant="290" id="qoW-Cb-hjH"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77P-0z-Uhx">
+                                <rect key="frame" x="278.5" y="356.5" width="54" height="31"/>
+                                <color key="backgroundColor" red="0.54667474158725837" green="0.67591793814678991" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="H5R-3g-MZM"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="hC9-CM-omK"/>
+                                    <constraint firstAttribute="width" constant="54" id="ziF-M6-xtb"/>
+                                </constraints>
+                                <state key="normal" title="Sök">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="3Qy-hR-DnB" kind="show" id="FmH-O5-vqz"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90454085624892666" green="1" blue="0.88820401470266741" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="77P-0z-Uhx" firstAttribute="top" secondItem="l7c-A2-4tc" secondAttribute="bottom" constant="8" id="1gr-OE-7Qi"/>
+                            <constraint firstItem="q7K-57-5M0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="54" id="5kd-tP-qIb"/>
+                            <constraint firstItem="77P-0z-Uhx" firstAttribute="trailing" secondItem="l7c-A2-4tc" secondAttribute="trailing" id="AOO-e1-0UP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="q7K-57-5M0" secondAttribute="trailing" constant="7" id="ZwX-s1-aYZ"/>
+                            <constraint firstItem="l7c-A2-4tc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bEo-Qw-U8e"/>
+                            <constraint firstItem="l7c-A2-4tc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eI7-cJ-flW"/>
+                            <constraint firstItem="q7K-57-5M0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="46" id="tf7-35-0Z2"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="geP-Eq-Ooc">
             <objects>
-                <tableViewController id="3Qy-hR-DnB" sceneMemberID="viewController">
+                <tableViewController id="3Qy-hR-DnB" customClass="TableViewController" customModule="SwiftLabb1" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="afH-6d-xd4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,7 +99,25 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tIE-Cr-YXU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860" y="136"/>
+            <point key="canvasLocation" x="862" y="139"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="1fk-hg-G8q">
+            <objects>
+                <viewController id="Ork-u9-vjb" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1Ij-t6-eeO"/>
+                        <viewControllerLayoutGuide type="bottom" id="3VX-YF-bE7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EOl-CA-cpE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2pW-R1-Bvo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1631" y="139"/>
         </scene>
     </scenes>
 </document>
