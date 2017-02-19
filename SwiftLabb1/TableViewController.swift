@@ -9,10 +9,22 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    
+    var searchedString : String?
 
+    struct dataCell{
+        let name : String!
+        let value : String!
+    }
+    
+    var cellArray = [dataCell(name : "brod", value : "283"),
+                     dataCell(name: "majs", value: "432")]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        cellArray.append(dataCell(name: searchedString, value : "dsa"))
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -23,29 +35,28 @@ class TableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return cellArray.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
 
-        // Configure the cell...
+        cell.textLabel?.text = cellArray[indexPath.row].name
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
