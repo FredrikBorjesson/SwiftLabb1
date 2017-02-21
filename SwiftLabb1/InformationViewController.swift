@@ -1,19 +1,20 @@
 //
-//  SearchViewController.swift
+//  InformationViewController.swift
 //  SwiftLabb1
 //
-//  Created by Mr X on 2017-02-17.
+//  Created by Mr X on 2017-02-21.
 //  Copyright © 2017 Fredrik Börjesson. All rights reserved.
 //
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class InformationViewController: UIViewController {
 
-    @IBOutlet weak var searchedText: UITextField!
+    var pressedCellNumber : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "\(pressedCellNumber)"
         // Do any additional setup after loading the view.
     }
 
@@ -23,16 +24,14 @@ class SearchViewController: UIViewController {
     }
     
 
-    
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let segueSender = segue.destination as! TableViewController
-        segueSender.searchedString = searchedText.text
+        // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    
+    */
 
 }

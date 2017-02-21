@@ -11,18 +11,19 @@ import UIKit
 class TableViewController: UITableViewController {
     
     var searchedString : String?
-
-    struct dataCell{
-        let name : String!
-        let value : String!
-    }
+    var searchedResult : [[String: Any]] = []
     
-    var cellArray = [dataCell(name : "brod", value : "283"),
-                     dataCell(name: "majs", value: "432")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cellArray.append(dataCell(name: searchedString, value : "dsa"))
+        
+        getSeacrhedResults(searchedWord: searchedString!){
+            self.searchedResult = $0
+            print("In viewdidload")
+            print(self.searchedResult)
+            self.tableView.reloadData()
+        }
+        
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -37,6 +38,11 @@ class TableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
         
     }
+    
+    func setJsonData(jsonData : [[String: Any]]){
+        searchedResult = jsonData
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -45,15 +51,22 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellArray.count
+        return searchedResult.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
-
-        cell.textLabel?.text = cellArray[indexPath.row].name
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as!
+        CustomTableViewCell
+        
+        //print(searchedResult)
+        if let name = searchedResult[indexPath.row]["name"] as? String{
+            cell.name.text = name
+        }
+        if let number = searchedResult[indexPath.row]["number"] as? Float{
+            cell.number = Int(number)
+        }
+        
         return cell
     }
     
@@ -92,15 +105,40 @@ class TableViewController: UITableViewController {
         return true
     }
     */
-
-    /*
+    
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let segueSender = segue.destination as! InformationViewController
+        if let row = tableView.indexPathForSelectedRow{
+            if let cell = tableView.cellForRow(at: row) as? CustomTableViewCell{
+                segueSender.pressedCellNumber = cell.number
+            }
+        }
+        
+        
+     }
+ 
+    
+    
+}
+    
+
+class CustomTableViewCell : UITableViewCell{
+    
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var value: UILabel!
+    var number : Int = 0
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
     }
-    */
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
 
 }
