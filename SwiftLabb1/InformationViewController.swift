@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import GraphKit
 
-class InformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class InformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKBarGraphDataSource {
+    
     var pressedFood : Food?
     
+    
+    @IBOutlet weak var pictureLabel: UILabel!
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var protein: UILabel!
-    @IBOutlet weak var fat: UILabel!
-    @IBOutlet weak var carbohydrates: UILabel!
     @IBOutlet weak var healthyValue: UILabel!
-   
+    @IBOutlet weak var graphView: UIView!
+    
+    @IBOutlet weak var favoriteButton: UIButton!
+    
+    @IBOutlet weak var pictureButton: UIButton!
     @IBOutlet weak var healthPoints1: UIImageView!
     @IBOutlet weak var healthPoints2: UIImageView!
     @IBOutlet weak var healthPoints3: UIImageView!
@@ -29,20 +33,27 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //pressedFood!.calculateHealthyValue()
+        favoriteButton.layer.cornerRadius = 5
+        pictureButton.layer.cornerRadius = 5
         setLabels()
-        
         if let image = UIImage(contentsOfFile: imagePath){
             foodImage.image = image
+            foodImage.alpha = 1
+            pictureLabel.isHidden = true
         } else {
-            foodImage.image = #imageLiteral(resourceName: "no-image-available")
+            pictureLabel.isHidden = false
+            foodImage.alpha = 0.7
         }
         
-        //pressedFood!.calculateHealthyValue()
         animateHealthPoints()
-        
         self.title = "Info"
-        // Do any additional setup after loading the view.
+        
+        let graph = GKBarGraph(frame: CGRect(x: 0, y: 0, width: graphView.frame.width, height: graphView.frame.height))
+        graph.barHeight = graphView.frame.height * 0.75
+        graph.dataSource = self
+        graphView.addSubview(graph)
+        graph.barWidth = graph.frame.width / CGFloat(self.numberOfBars() + 1)
+        graph.draw()
     }
     
     
@@ -69,21 +80,18 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     func setLabels(){
         name.text = pressedFood!.name
-        protein.text = "Protein: \(pressedFood!.protein)"
-        fat.text = "Fett: \(pressedFood!.fat)"
-        carbohydrates.text = "Kolhydrater: \(pressedFood!.carbohydrates)"
     }
     
     @IBAction func takePicture(_ sender: Any) {
@@ -132,41 +140,84 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
     
     func animateHealthPoints(){
         print("Healthy value: \(pressedFood!.healthyValue)")
-        UIView.animate(withDuration: 1.5, animations: {
-            self.healthPoints1.image = #imageLiteral(resourceName: "Apple-image")
-            self.healthPoints1.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
-            self.healthPoints1.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        var hValue : Int = 0
+        if let value = pressedFood?.healthyValue{
+            hValue = value
+        }
+        
+        
+        
+        UIView.animate(withDuration: 2, animations: {
+            self.healthPoints1.image = #imageLiteral(resourceName: "apple-value")
+            self.healthPoints1.transform = CGAffineTransform(scaleX: 3, y: 3)
+            self.healthPoints1.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         })
-        if pressedFood!.healthyValue > 5{
-            UIView.animate(withDuration: 1.5, animations: {
-                self.healthPoints2.image = #imageLiteral(resourceName: "Apple-image")
-                self.healthPoints2.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
-                self.healthPoints2.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        if hValue > 5{
+            UIView.animate(withDuration: 2, animations: {
+                self.healthPoints2.image = #imageLiteral(resourceName: "apple-value")
+                self.healthPoints2.transform = CGAffineTransform(scaleX: 3, y: 3)
+                self.healthPoints2.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             })
         }
-        if pressedFood!.healthyValue > 10{
-            UIView.animate(withDuration: 1.5, animations: {
-                self.healthPoints3.image = #imageLiteral(resourceName: "Apple-image")
-                self.healthPoints3.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
-                self.healthPoints3.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        if hValue > 8{
+            UIView.animate(withDuration: 2, animations: {
+                self.healthPoints3.image = #imageLiteral(resourceName: "apple-value")
+                self.healthPoints3.transform = CGAffineTransform(scaleX: 3, y: 3)
+                self.healthPoints3.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             })
         }
-        if pressedFood!.healthyValue > 15{
-            UIView.animate(withDuration: 1.5, animations: {
-                self.healthPoints4.image = #imageLiteral(resourceName: "Apple-image")
-                self.healthPoints4.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
-                self.healthPoints4.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        if hValue > 12{
+            UIView.animate(withDuration: 2, animations: {
+                self.healthPoints4.image = #imageLiteral(resourceName: "apple-value")
+                self.healthPoints4.transform = CGAffineTransform(scaleX: 3, y: 3)
+                self.healthPoints4.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             })
         }
-        if pressedFood!.healthyValue > 20{
-            UIView.animate(withDuration: 1.5, animations: {
-                self.healthPoints5.image = #imageLiteral(resourceName: "Apple-image")
-                self.healthPoints5.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
-                self.healthPoints5.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        if hValue > 15{
+            UIView.animate(withDuration: 2, animations: {
+                self.healthPoints5.image = #imageLiteral(resourceName: "apple-value")
+                self.healthPoints5.transform = CGAffineTransform(scaleX: 3, y: 3)
+                self.healthPoints5.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             })
         }
     }
-
+    
+    
+    func numberOfBars() -> Int{
+        return 3
+    }
+    
+    func valueForBar(at index: Int) -> NSNumber!{
+        if index == 0{
+            return NSNumber(integerLiteral: pressedFood!.protein)
+        }else if index == 1{
+            return NSNumber(integerLiteral: pressedFood!.fat)
+        }else{
+            return NSNumber(integerLiteral: pressedFood!.carbohydrates)
+        }
+    }
+    
+    func colorForBar(at index: Int) -> UIColor!{
+        return UIColor.blue
+    }
+    
+    func colorForBarBackground(at index: Int) -> UIColor!{
+        return UIColor(white: 1, alpha: 0.5)
+    }
+    
+    func animationDurationForBar(at index: Int) -> CFTimeInterval{
+        return 1.0
+    }
+    
+    func titleForBar(at index: Int) -> String!{
+        if index == 0{
+            return "\(pressedFood!.protein)%"
+        }else if index == 1{
+            return "\(pressedFood!.fat)%"
+        }else{
+            return "\(pressedFood!.carbohydrates)%"
+        }
+    }
 }
 
 class Food{
@@ -180,7 +231,7 @@ class Food{
     
     var retrivedData = false
     
-    var healthyValue : Int {
+    var healthyValue : Int? {
         return protein + carbohydrates - fat
     }
     

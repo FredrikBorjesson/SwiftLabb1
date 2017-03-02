@@ -146,7 +146,6 @@ func setupFoodObject(food : Food, setData : @escaping (Food) -> Void){
                                 food.carbohydrates = Int(carbohydrates)
                             }
                         }
-                        food.retrivedData = true
                         setData(food)
                     }
                 }

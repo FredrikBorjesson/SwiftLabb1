@@ -20,6 +20,10 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "food-search"))
+        imageView.alpha = 0.3
+        imageView.contentMode = .scaleAspectFill
+        self.tableView.backgroundView = imageView
         
         getSeacrhedResults(searchedWord: searchedString!){
             self.searchedResult = $0
@@ -68,8 +72,6 @@ class TableViewController: UITableViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        
     }
     
     func setJsonData(jsonData : [[String: Any]]){
@@ -96,24 +98,26 @@ class TableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as!
         CustomTableViewCell
         
+        cell.backgroundColor = UIColor(white: 1, alpha: 0)
         if searchedSelected{
             cell.name.text = foodArray[indexPath.row].name
             if foodArray[indexPath.row].retrivedData{
-                cell.value.text = "\(foodArray[indexPath.row].energy)"
+                cell.value.text = "kcal: \(foodArray[indexPath.row].energy)"
                 print("Värde finns")
             } else {
+                self.foodArray[indexPath.row].retrivedData = true
                 setupFoodObject(food: foodArray[indexPath.row]){
                     self.foodArray[indexPath.row] = $0
-                    cell.value.text = "\(self.foodArray[indexPath.row].energy)"
                     print("värde hämtas")
                     DispatchQueue.main.async {
+                        cell.value.text = "kcal: \(self.foodArray[indexPath.row].energy)"
                         self.tableView.reloadData()
                     }
                 }
             }
         } else {
             cell.name.text = favoriteNameArray[indexPath.row]
-            cell.value.text = "Energi: \(favoriteEnergyArray[indexPath.row])"
+            cell.value.text = "kcal: \(favoriteEnergyArray[indexPath.row])"
         }
         return cell
     }
@@ -164,8 +168,6 @@ class TableViewController: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow{
                 segueSender.pressedFood = foodArray[indexPath.row]
         }
-        
-        
      }
     
     func searchToFoodObjects(){
