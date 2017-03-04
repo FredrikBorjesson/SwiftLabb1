@@ -37,7 +37,7 @@ class SearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let segueSender = segue.destination as! TableViewController
-        segueSender.searchedString = searchedText.text
+        segueSender.searchedString = searchedText.text?.lowercased()
         // Pass the selected object to the new view controller.
     }
     

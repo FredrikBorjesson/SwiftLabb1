@@ -12,7 +12,7 @@ import GraphKit
 class InformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKBarGraphDataSource {
     
     var pressedFood : Food?
-    
+    var searchedString : String?
     
     @IBOutlet weak var pictureLabel: UILabel!
     @IBOutlet weak var name: UILabel!
@@ -37,9 +37,8 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
         pictureButton.layer.cornerRadius = 5
         setLabels()
         if let image = UIImage(contentsOfFile: imagePath){
-            foodImage.image = image
-            foodImage.alpha = 1
-            pictureLabel.isHidden = true
+            setImage(image: image)
+            
         } else {
             pictureLabel.isHidden = false
             foodImage.alpha = 0.7
@@ -81,15 +80,17 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     
-    /*
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+        let segueSender = segue.destination as! TableViewController
+        segueSender.foodToCompare = pressedFood!
+        segueSender.searchedString = searchedString
+        segueSender.compareMode = true
      }
-     */
+    
     func setLabels(){
         name.text = pressedFood!.name
     }
@@ -112,7 +113,7 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerEditedImage] as! UIImage
-        foodImage.image = image
+        setImage(image: image)
         if let data = UIImagePNGRepresentation(image){
             do{
                 let url = URL(fileURLWithPath: imagePath)
@@ -123,6 +124,14 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
             }
         }
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func setImage(image: UIImage){
+        foodImage.image = image
+        foodImage.alpha = 1
+        foodImage.backgroundColor = UIColor.clear
+        pictureLabel.isHidden = true
+        
     }
     
     var imagePath : String {
@@ -220,21 +229,5 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
     }
 }
 
-class Food{
-    var name : String = ""
-    var number : Int = 0
-    var energy : Int = 0
-    var protein : Int = 0
-    var fat : Int = 0
-    var carbohydrates : Int = 0
-    var foodValue = 0
-    
-    var retrivedData = false
-    
-    var healthyValue : Int? {
-        return protein + carbohydrates - fat
-    }
-    
-}
 
 

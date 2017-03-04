@@ -12,11 +12,11 @@ class TableViewController: UITableViewController {
     
     var foodArray : [Food] = []
     var searchedString : String?
-    var searchedResult : [[String: Any]] = []
     var searchedSelected = true
     var favoritesArray : [Int] = []
-    var favoriteNameArray : [String] = []
-    var favoriteEnergyArray : [Int] = []
+    var favoriteFoodArray : [Food] = []
+    var compareMode = false
+    var foodToCompare = Food()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,26 +26,20 @@ class TableViewController: UITableViewController {
         self.tableView.backgroundView = imageView
         
         getSeacrhedResults(searchedWord: searchedString!){
-            self.searchedResult = $0
-            self.searchToFoodObjects()
+            self.foodArray = $0
             self.tableView.reloadData()
         }
-        
         
         if let maybeFavoritesArray = UserDefaults.standard.object(forKey: "favorites") as? [Int]{
             favoritesArray = maybeFavoritesArray
         }
         
         for number in self.favoritesArray{
-            getCertainFoodAsJson(foodNumber: (number)){
-                if let name = $0["name"] as? String{
-                    self.favoriteNameArray.append(name)
-                }
+            let tempFood = Food()
+            tempFood.number = number
+            setupFoodObject(food: tempFood){
+                self.favoriteFoodArray.append($0)
             }
-            getCertainEnergyvalue(foodNumber: number){
-                self.favoriteEnergyArray.append($0)
-            }
-
         }
         
         
@@ -54,11 +48,6 @@ class TableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(false)
-        print("i viewwillappear")
     }
     
     @IBAction func favoriteOrNot(_ sender: UISegmentedControl) {
@@ -74,10 +63,6 @@ class TableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
     
-    func setJsonData(jsonData : [[String: Any]]){
-        searchedResult = jsonData
-        tableView.reloadData()
-    }
 
     // MARK: - Table view data source
 
@@ -107,6 +92,7 @@ class TableViewController: UITableViewController {
             } else {
                 self.foodArray[indexPath.row].retrivedData = true
                 setupFoodObject(food: foodArray[indexPath.row]){
+                    print("Nummer: \(self.foodArray[indexPath.row].number)")
                     self.foodArray[indexPath.row] = $0
                     print("värde hämtas")
                     DispatchQueue.main.async {
@@ -116,8 +102,8 @@ class TableViewController: UITableViewController {
                 }
             }
         } else {
-            cell.name.text = favoriteNameArray[indexPath.row]
-            cell.value.text = "kcal: \(favoriteEnergyArray[indexPath.row])"
+            cell.name.text = favoriteFoodArray[indexPath.row].name
+            cell.value.text = "kcal: \(favoriteFoodArray[indexPath.row].energy)"
         }
         return cell
     }
@@ -163,21 +149,23 @@ class TableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let segueSender = segue.destination as! InformationViewController
-        if let indexPath = tableView.indexPathForSelectedRow{
+        if compareMode == false{
+            let segueSender = segue.destination as! InformationViewController
+            if let indexPath = tableView.indexPathForSelectedRow{
                 segueSender.pressedFood = foodArray[indexPath.row]
+                segueSender.searchedString = searchedString
+            }
+        } else {
+            let segueSender = segue.destination as! CompareViewController
+            if let indexPath = tableView.indexPathForSelectedRow{
+                segueSender.food1 = foodToCompare
+                segueSender.food2 = foodArray[indexPath.row]
+            }
         }
      }
     
-    func searchToFoodObjects(){
-        for s in searchedResult{
-            let tempFood = Food()
-            tempFood.name = s["name"] as! String
-            tempFood.number = s["number"] as! Int
-            foodArray.append(tempFood)
-        }
-    }
 }
 
 
