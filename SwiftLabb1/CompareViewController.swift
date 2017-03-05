@@ -24,8 +24,8 @@ class CompareViewController: UIViewController{
         super.viewDidLoad()
         name1.text = food1.name
         name2.text = food2.name
-        
-        let graph1 = GKBarGraph(frame: CGRect(x: 0, y: 0, width: graphView1.frame.width, height: graphView1.frame.height))
+        print("\(graphView1.center.x)")
+        let graph1 = GKBarGraph(frame: CGRect(x: graphView1.center.x, y: graphView1.center.y, width: graphView1.frame.width, height: graphView1.frame.height))
         let customData1 = CustomBarGraph(food: food1)
         graph1.dataSource = customData1
         graphView1.addSubview(graph1)
