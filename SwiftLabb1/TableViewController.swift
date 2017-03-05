@@ -182,9 +182,11 @@ class TableViewController: UITableViewController {
     @IBAction func compareButtonPressed(_ sender: Any) {
         if self.compareMode == false{
             self.tableView.allowsMultipleSelection = true
+            self.compareButton.tintColor = UIColor.darkGray
             compareMode = true
         } else {
             self.tableView.allowsMultipleSelection = false
+            self.compareButton.tintColor = UIColor.blue
             compareMode = false
         }
     }
