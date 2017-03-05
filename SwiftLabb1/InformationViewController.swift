@@ -12,12 +12,16 @@ import GraphKit
 class InformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var pressedFood : Food?
-    var searchedString : String?
     
     @IBOutlet weak var pictureLabel: UILabel!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var healthyValue: UILabel!
-    @IBOutlet weak var graphView: UIView!
+    
+    @IBOutlet weak var proteinLabel: UILabel!
+    @IBOutlet weak var fatLabel: UILabel!
+    @IBOutlet weak var carbohydratesLabel: UILabel!
+    
+    
     
     @IBOutlet weak var favoriteButton: UIButton!
     
@@ -35,7 +39,7 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         favoriteButton.layer.cornerRadius = 5
         pictureButton.layer.cornerRadius = 5
-        setLabels()
+        name.text = pressedFood!.name
         if let image = UIImage(contentsOfFile: imagePath){
             setImage(image: image)
             
@@ -43,17 +47,13 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
             pictureLabel.isHidden = false
             foodImage.alpha = 0.7
         }
-        
+        proteinLabel.text = "Protein: \(pressedFood!.protein)%"
+        fatLabel.text = "Fett: \(pressedFood!.fat)%"
+        carbohydratesLabel.text = "Kh: \(pressedFood!.protein)%"
         animateHealthPoints()
         self.title = "Info"
-        print("\(view.frame.maxY)  \(view.frame.maxX)")
-        let graph = GKBarGraph(frame: CGRect(x: 0, y: 0, width: graphView.frame.width, height: graphView.frame.height))
-        //graph.marginBar = 20
-        graph.barHeight *= 0.75
-        let customData = CustomBarGraph(food: pressedFood!)
-        graph.dataSource = customData
-        graphView.addSubview(graph)
-        graph.draw()
+        
+        
     }
     
     
@@ -72,29 +72,6 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
             UserDefaults.standard.set(newArray, forKey: "favorites")
             print("\(pressedFood!.number) spara första gången")
         }
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    /*
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let segueSender = segue.destination as! TableViewController
-        segueSender.foodToCompare = pressedFood!
-        segueSender.searchedString = searchedString
-        segueSender.compareMode = true
-     }*/
-    
-    func setLabels(){
-        name.text = pressedFood!.name
     }
     
     @IBAction func takePicture(_ sender: Any) {

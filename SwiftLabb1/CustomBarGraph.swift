@@ -11,28 +11,25 @@ import GraphKit
 
 class CustomBarGraph: NSObject, GKBarGraphDataSource{
 
-    var food = Food()
+    var food1 = Food()
+    var food2 = Food()
+    let barColors = [UIColor.blue, UIColor.green]
+    var valueArray : [Int] = []
     
-    init(food : Food){
-     self.food = food
+    init(food1 : Food, food2: Food){
+        valueArray = [food1.protein, food2.protein, food1.fat, food2.fat, food1.carbohydrates, food2.carbohydrates]
     }
     
     public func numberOfBars() -> Int{
-        return 3
+        return 6
     }
     
     public func valueForBar(at index: Int) -> NSNumber!{
-        if index == 0{
-            return NSNumber(integerLiteral: food.protein)
-        }else if index == 1{
-            return NSNumber(integerLiteral: food.fat)
-        }else{
-            return NSNumber(integerLiteral: food.carbohydrates)
-        }
+        return NSNumber(integerLiteral: valueArray[index])
     }
     
     public func colorForBar(at index: Int) -> UIColor!{
-        return UIColor.blue
+        return barColors[index % 2]
     }
     
     public func colorForBarBackground(at index: Int) -> UIColor!{
@@ -45,13 +42,8 @@ class CustomBarGraph: NSObject, GKBarGraphDataSource{
     
     
     public func titleForBar(at index: Int) -> String!{
-        if index == 0{
-            return "\(food.protein)%"
-        }else if index == 1{
-            return "\(food.fat)%"
-        }else{
-            return "\(food.carbohydrates)%"
-        }
+      
+            return "\(valueArray[index])%"
     }
 
 

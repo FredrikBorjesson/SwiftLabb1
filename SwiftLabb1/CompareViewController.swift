@@ -13,35 +13,25 @@ class CompareViewController: UIViewController{
     
     var food1 = Food()
     var food2 = Food()
-    @IBOutlet weak var graphView1: UIView!
-    @IBOutlet weak var graphView2: UIView!
     
     @IBOutlet weak var name1: UILabel!
     @IBOutlet weak var name2: UILabel!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        name1.text = food1.name
-        name2.text = food2.name
-        print("\(graphView1.center.x)")
-        let graph1 = GKBarGraph(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: view.frame.width, height: view.frame.height/5))
-        let customData1 = CustomBarGraph(food: food1)
-        graph1.dataSource = customData1
-        graphView1.addSubview(graph1)
-        graph1.draw()
-        
-        let graph2 = GKBarGraph(frame: CGRect(x: view.frame.minX, y: view.frame.minX, width: view.frame.width, height: view.frame.height))
-        let customData2 = CustomBarGraph(food: food2)
-        graph2.dataSource = customData2
-        graphView2.addSubview(graph2)
-        graph2.draw()
+        name1.text = food1.name!
+        name2.text = food2.name!
+        name1.textColor = UIColor.blue
+        name2.textColor = UIColor.green
+        let graph = GKBarGraph(frame: CGRect(x: view.frame.minX, y: view.frame.minY, width: view.frame.width, height: view.frame.height * 0.8))
+        graph.barWidth = 15
+        graph.barWidth = 10
+        let customData1 = CustomBarGraph(food1: food1, food2: food2)
+        graph.dataSource = customData1
+        view.addSubview(graph)
+        graph.draw()
         
      
     }
-
-
-    
-    
 
 }
