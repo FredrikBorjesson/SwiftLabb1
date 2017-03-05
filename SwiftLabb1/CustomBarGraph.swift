@@ -17,7 +17,6 @@ class CustomBarGraph: NSObject, GKBarGraphDataSource{
      self.food = food
     }
     
-    
     public func numberOfBars() -> Int{
         return 3
     }

@@ -9,7 +9,7 @@
 import UIKit
 import GraphKit
 
-class InformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GKBarGraphDataSource {
+class InformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var pressedFood : Food?
     var searchedString : String?
@@ -46,12 +46,13 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
         
         animateHealthPoints()
         self.title = "Info"
-        
+        print("\(view.frame.maxY)  \(view.frame.maxX)")
         let graph = GKBarGraph(frame: CGRect(x: 0, y: 0, width: graphView.frame.width, height: graphView.frame.height))
-        graph.barHeight = graphView.frame.height * 0.75
-        graph.dataSource = self
+        //graph.marginBar = 20
+        graph.barHeight *= 0.75
+        let customData = CustomBarGraph(food: pressedFood!)
+        graph.dataSource = customData
         graphView.addSubview(graph)
-        graph.barWidth = graph.frame.width / CGFloat(self.numberOfBars() + 1)
         graph.draw()
     }
     
@@ -193,41 +194,7 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     
-    func numberOfBars() -> Int{
-        return 3
-    }
     
-    func valueForBar(at index: Int) -> NSNumber!{
-        if index == 0{
-            return NSNumber(integerLiteral: pressedFood!.protein)
-        }else if index == 1{
-            return NSNumber(integerLiteral: pressedFood!.fat)
-        }else{
-            return NSNumber(integerLiteral: pressedFood!.carbohydrates)
-        }
-    }
-    
-    func colorForBar(at index: Int) -> UIColor!{
-        return UIColor.blue
-    }
-    
-    func colorForBarBackground(at index: Int) -> UIColor!{
-        return UIColor(white: 1, alpha: 0.5)
-    }
-    
-    func animationDurationForBar(at index: Int) -> CFTimeInterval{
-        return 1.0
-    }
-    
-    func titleForBar(at index: Int) -> String!{
-        if index == 0{
-            return "\(pressedFood!.protein)%"
-        }else if index == 1{
-            return "\(pressedFood!.fat)%"
-        }else{
-            return "\(pressedFood!.carbohydrates)%"
-        }
-    }
 }
 
 
