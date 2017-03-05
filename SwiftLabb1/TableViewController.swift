@@ -18,6 +18,10 @@ class TableViewController: UITableViewController {
     var compareMode = false
     var foodToCompare = Food()
     
+    @IBOutlet weak var compareButton: UIBarButtonItem!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let imageView = UIImageView(image: #imageLiteral(resourceName: "food-search"))
@@ -144,27 +148,47 @@ class TableViewController: UITableViewController {
     }
     */
     
-    
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if compareMode == false{
+            self.performSegue(withIdentifier: "info", sender: self)
+        } else {
+            if self.tableView.indexPathsForSelectedRows?.count == 2{
+                self.performSegue(withIdentifier: "compare", sender: self)
+            }
+        }
+        
+    }
+ 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if compareMode == false{
+        if segue.identifier == "info" {
             let segueSender = segue.destination as! InformationViewController
             if let indexPath = tableView.indexPathForSelectedRow{
                 segueSender.pressedFood = foodArray[indexPath.row]
                 segueSender.searchedString = searchedString
             }
-        } else {
+        } else{
             let segueSender = segue.destination as! CompareViewController
-            if let indexPath = tableView.indexPathForSelectedRow{
-                segueSender.food1 = foodToCompare
-                segueSender.food2 = foodArray[indexPath.row]
+            if let indexPaths = tableView.indexPathsForSelectedRows{
+                segueSender.food1 = foodArray[indexPaths[0].row]
+                segueSender.food2 = foodArray[indexPaths[1].row]
             }
         }
-     }
+    }
+    
+    @IBAction func compareButtonPressed(_ sender: Any) {
+        if self.compareMode == false{
+            self.tableView.allowsMultipleSelection = true
+            compareMode = true
+        } else {
+            self.tableView.allowsMultipleSelection = false
+            compareMode = false
+        }
+    }
+    
     
 }
 

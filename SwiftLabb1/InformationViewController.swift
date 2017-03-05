@@ -84,12 +84,13 @@ class InformationViewController: UIViewController, UIImagePickerControllerDelega
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
+    /*
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueSender = segue.destination as! TableViewController
         segueSender.foodToCompare = pressedFood!
         segueSender.searchedString = searchedString
         segueSender.compareMode = true
-     }
+     }*/
     
     func setLabels(){
         name.text = pressedFood!.name

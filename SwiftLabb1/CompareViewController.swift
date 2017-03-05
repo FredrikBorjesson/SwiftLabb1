@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import GraphKit
 
-class CompareViewController: UIViewController {
+class CompareViewController: UIViewController{
     
     var food1 = Food()
     var food2 = Food()
@@ -23,24 +24,23 @@ class CompareViewController: UIViewController {
         super.viewDidLoad()
         name1.text = food1.name
         name2.text = food2.name
-
-        // Do any additional setup after loading the view.
+        
+        let graph1 = GKBarGraph(frame: CGRect(x: 0, y: 0, width: graphView1.frame.width, height: graphView1.frame.height))
+        graph1.barHeight = graphView1.frame.height * 0.75
+        let g1 = CustomBarGraph(food: food1)
+        graph1.dataSource = g1
+        graphView1.addSubview(graph1)
+        graph1.draw()
+        
+        /*
+        let graph2 = GKBarGraph(frame: CGRect(x: 0, y: 0, width: graphView2.frame.width, height: graphView2.frame.height))
+        graph2.dataSource = CustomBarGraph(food: food2)
+        graphView2.addSubview(graph2)
+        graph2.draw()*/
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
