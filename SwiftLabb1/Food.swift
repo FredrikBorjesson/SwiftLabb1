@@ -17,6 +17,7 @@ class Food{
     var carbohydrates : Int = 0
     var foodValue = 0
     
+    
     var retrivedData = false
     
     var healthyValue : Int? {
