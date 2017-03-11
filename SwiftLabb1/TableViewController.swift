@@ -30,9 +30,13 @@ class TableViewController: UITableViewController {
         self.tableView.backgroundView = imageView
         self.compareButton.tintColor = UIColor.darkGray
         
-        getSeacrhedResults(searchedWord: searchedString!){
-            self.foodArray = $0
+        getSeacrhedResults(searchedWord: searchedString!){ data in
+            
+            DispatchQueue.main.async {
+                self.foodArray = data
+            
             self.tableView.reloadData()
+            }
         }
         
         if let maybeFavoritesArray = UserDefaults.standard.object(forKey: "favorites") as? [Int]{
@@ -88,13 +92,14 @@ class TableViewController: UITableViewController {
             cell.name.text = foodArray[indexPath.row].name
             if foodArray[indexPath.row].retrivedData{
                 cell.value.text = "kcal: \(foodArray[indexPath.row].energy)"
+                
             } else {
                 self.foodArray[indexPath.row].retrivedData = true
                 setupFoodObject(food: foodArray[indexPath.row]){
                     self.foodArray[indexPath.row] = $0
+                    cell.value.text = "kcal: \(self.foodArray[indexPath.row].energy)"
                     DispatchQueue.main.async {
-                        cell.value.text = "kcal: \(self.foodArray[indexPath.row].energy)"
-                        self.tableView.reloadData()
+                        tableView.reloadData()
                     }
                 }
             }
@@ -102,6 +107,7 @@ class TableViewController: UITableViewController {
             cell.name.text = favoriteFoodArray[indexPath.row].name
             cell.value.text = "kcal: \(favoriteFoodArray[indexPath.row].energy)"
         }
+        
         return cell
     }
     
